@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
 	try {
-		const connect = await mongoose.connect('roundhouse.proxy.rlwy.net:11385');
+		const connect = await mongoose.connect(process.env.MONOGO_DB_URI);
 		console.log(
 			`Mongo DB connection successful at is ${connect.connection.host}`
 		);
 	} catch (err) {
-		console.log(`Error ${err.message}`.red);
+		console.log(`Error ${err.message}`);
 		process.exit();
 	}
 };

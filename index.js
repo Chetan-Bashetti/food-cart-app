@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
 const connectDB = require('./config/db-connect');
 
 // ROUTES
@@ -7,8 +9,10 @@ const categoryRoutes = require('./routes/category');
 const foodItems = require('./routes/food-items');
 const orders = require('./routes/orders');
 
-const server = express();
+dotenv.config();
 connectDB();
+
+const server = express();
 
 server.use(express.json());
 server.use(cors());
