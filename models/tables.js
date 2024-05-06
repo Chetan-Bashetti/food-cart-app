@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 
 const tableSchema = new Schema(
 	{
-		table_id: {
-			type: String,
-			default: id.generate()
-		},
 		tabel_number: {
 			type: Number,
 			required: true
@@ -18,6 +14,6 @@ const tableSchema = new Schema(
 	}
 );
 
-const Tables = mongoose.Model('Tables', tableSchema);
+const Tables = mongoose.model('Tables', tableSchema);
 
 module.exports = Tables;
