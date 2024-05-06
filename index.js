@@ -8,6 +8,7 @@ const connectDB = require('./config/db-connect');
 const categoryRoutes = require('./routes/category');
 const foodItems = require('./routes/food-items');
 const orders = require('./routes/orders');
+const tables = require('./routes/tabels');
 
 dotenv.config();
 connectDB();
@@ -20,6 +21,7 @@ server.use(cors());
 server.use('/category', categoryRoutes);
 server.use('/food-items', foodItems);
 server.use('/orders', orders);
+server.use('/tables', tables);
 
 const port = process.env.PORT || 8080;
 
