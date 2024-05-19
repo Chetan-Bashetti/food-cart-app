@@ -2,14 +2,13 @@ const asyncHandler = require('express-async-handler');
 const FoodItems = require('../models/food-items');
 
 const addNewFoodItem = asyncHandler(async (req, res) => {
-	const { food_item_name, food_item_price, is_available, food_item_category } =
-		req.body;
+	const { item_name, price, item_id, item_type } = req.body;
 
 	const foodItem = await FoodItems.create({
-		food_item_name,
-		food_item_price,
-		food_item_category,
-		is_available
+		item_name,
+		price,
+		item_type,
+		item_id
 	});
 	if (foodItem) {
 		res.status(200).send({ message: 'New food item created successfully' });
@@ -62,26 +61,22 @@ const deleteFoodItemById = asyncHandler(async (req, res) => {
 
 const updateFoodItemById = asyncHandler(async (req, res) => {
 	const food_item = await FoodItems.findById(req.params.id);
-	const { food_item_name, food_item_price, food_item_category, is_available } =
-		req.body;
+	const { item_name, price, item_type, item_id } = req.body;
 
-	if (food_item_name === '')
+	if (item_name === '')
 		return res.status(500).send({ message: 'Food item name cannot be empty' });
-	if (food_item_price === '')
+	if (price === '')
 		return res.status(500).send({ message: 'Food item price cannot be empty' });
-	if (food_item_category === '')
+	if (item_type === '')
 		return res
 			.status(500)
 			.send({ message: 'Food item category cannot be empty' });
 
 	if (food_item) {
-		food_item.food_item_name = food_item_name || food_item.food_item_name;
-		food_item.food_item_price = food_item_price || food_item.food_item_price;
-		food_item.food_item_category =
-			food_item_category || food_item.food_item_category;
-		food_item.is_available = is_available
-			? is_available
-			: food_item.is_available;
+		food_item.item_name = item_name || food_item.item_name;
+		food_item.price = price || food_item.price;
+		food_item.item_type = item_type || food_item.item_type;
+		food_item.item_id = item_id ? item_id : food_item.item_id;
 		await food_item.save();
 		res.status(200).send({
 			message: 'Fodd item details updated',

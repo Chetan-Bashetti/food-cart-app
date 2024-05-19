@@ -15,9 +15,12 @@ const orderSchema = new Schema(
 		items_orderd: {
 			type: [
 				{
-					food_item_name: String,
-					category: String,
-					price: String
+					item_name: String,
+					item_id: String,
+					item_type: String,
+					price: String,
+					isSelected: Boolean,
+					count: Number
 				}
 			],
 			required: true

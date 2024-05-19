@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Orders = require('../models/orders');
 
 const createNewOrder = asyncHandler(async (req, res) => {
-	const { order_status, items_orderd, table_number } = req.body;
+	const { order_status, items_orderd, table_number, total_price } = req.body;
 
 	if (order_status && order_status === '')
 		return res.status(400).send({ message: 'Order status is important' });
@@ -11,21 +11,16 @@ const createNewOrder = asyncHandler(async (req, res) => {
 	if (table_number && table_number === 0)
 		return res.status(400).send({ message: 'Table number is required' });
 
-	let totalPrice = items_orderd.reduce(
-		(val, next) => parseInt(val) + parseInt(next.price),
-		0
-	);
-
 	const newOrder = await Orders.create({
 		order_status,
 		items_orderd,
-		total_price: totalPrice,
+		total_price,
 		table_number
 	});
 
 	if (newOrder) {
 		res.status(200).send({
-			message: `New order created success fully total price is ${totalPrice}`
+			message: `New order created success fully total price is ${total_price}`
 		});
 	} else {
 		res.status(400).send({
@@ -59,22 +54,15 @@ const getOrdersById = asyncHandler(async (req, res) => {
 });
 
 const updateOrderById = asyncHandler(async (req, res) => {
-	const { order_status, items_orderd, table_number } = req.body;
+	const { order_status, items_orderd, table_number, total_price } = req.body;
 
 	const order = await Orders.findById(req.params.id);
-	let totalPrice = 0;
-	if (items_orderd) {
-		totalPrice = items_orderd.reduce(
-			(val, next) => parseInt(val) + parseInt(next.price),
-			0
-		);
-	}
 
 	if (order) {
 		order.order_status = order_status || order.order_status;
 		order.items_orderd = items_orderd || order.items_orderd;
 		order.table_number = table_number || order.table_number;
-		order.total_price = totalPrice || order.total_price;
+		order.total_price = total_price || order.total_price;
 		await order.save();
 		res.status(200).send({
 			message: 'Order updated successfully'

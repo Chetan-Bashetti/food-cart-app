@@ -4,20 +4,20 @@ const Schema = mongoose.Schema;
 
 const foodItemSchema = new Schema(
 	{
-		food_item_name: {
+		item_name: {
 			type: String,
 			required: true
 		},
-		food_item_category: {
+		item_type: {
 			type: String,
 			required: true
 		},
-		food_item_price: {
+		price: {
 			type: String,
 			required: true
 		},
-		is_available: {
-			type: Boolean,
+		item_id: {
+			type: String,
 			required: true
 		}
 	},

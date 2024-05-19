@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const tableSchema = new Schema(
 	{
-		tabel_number: {
+		table_number: {
 			type: Number,
 			required: true
 		}
