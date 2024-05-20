@@ -30,7 +30,7 @@ const createNewOrder = asyncHandler(async (req, res) => {
 });
 
 const getAllOrders = asyncHandler(async (req, res) => {
-	const allOrders = await Orders.find();
+	const allOrders = await Orders.find().sort({ createdAt: -1 });
 
 	if (allOrders) {
 		res.status(200).send({ count: allOrders?.length, data: allOrders });
